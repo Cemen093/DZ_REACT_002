@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            display: flex;
+            margin: 30px;
+        }
+        .card{
+            margin: 15px;
+            padding: 15px;
+            border: 1px double black;
+        }
+        .card_name{
+
+        }
+        .card_image{
+
+        }
+        .card_description{
+            display: none;
+        }
+        .active{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        class Card{
+            constructor(item){
+                this.name = item[0]
+                this.image = item[1]
+                this.description = item[2]
+            }
+        }
+
+        class ShowCards extends React.Component{
+
+            constructor(props){
+                super(props);
+                
+                this.props = props;
+            }
+            
+            render(){
+                return <div class="container">{this.props.cards.map((element, i) => (
+                    <div id={"id_" + i} class='card'>
+                        <p class='card_name'>{element.name}</p>
+                        <img src={"image\\products\\" + element.image}/>
+                        <p class='card_description'>{element.description}</p>
+                    </div>)
+                )}</div>;
+            }
+        }
+
+        const cards = [new Card(['Apple iPhone 13 512 (Starlight)', '1.png', 'description_1']), new Card(['Apple iPhone 13 512 (Product Red)', '2.png', 'description_2'])];
+
+        ReactDOM.render(
+            <ShowCards cards={cards} />,
+            document.getElementById('app')
+        )
+        
+        let j =0;
+        for(j=0; j < 2; j++){
+            document.getElementById("id_" + j).onclick = function (e) {
+                document.querySelector('#' + e.currentTarget.id + ' > .card_description').classList.add('active');
+            }
+        }
+    </script>
+
+</body>
+</html>
